@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function FormatParameter() {
+    eval declare -rx $(basename "$0")_$$="$#"
+
+    # print the script parameter number in which this function is
+    eval eval eval echo the script parameter number in which this function is is: $(basename "$0")_$$='$'$(basename "$0")_$$
+
+    for ((i=1;i<=$(eval eval eval echo '$'$(basename "$0")_$$);i++)); do
+        eval declare -rx $(basename "$0")_$$_$i="'$'$i"
+        # print each parameter number
+        eval eval eval echo each parameter number is: $(basename "$0")_$$_$i='$'$(basename "$0")_$$_$i
+    done
+}

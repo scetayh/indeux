@@ -1,11 +1,22 @@
 #!/bin/bash
 
-function checkParameterExistence() {
-    if [ $# -eq 0 ]; then
+function CheckParameterExistence() {
+    # print the script parameter number in which this function is
+    #eval eval eval echo the script parameter number in which this function is is: $(basename "$0")_$$='$'$(basename "$0")_$$
+
+    if [[ $(eval eval eval echo '$'$(basename "$0")_$$) = 0 ]]; then
         exit 1
     fi
-    for ((i=1;i<=$#;i++)); do
-        if [[ `eval echo '$parameter'$i` = $1 ]]; then
+
+    # print the first parameter number as a test
+    #eval eval eval echo the first parameter number is: $(basename "$0")_$$_1='$'$(basename "$0")_$$_1
+
+    for ((i=1;i<=$(eval eval eval echo '$'$(basename "$0")_$$);i++)); do
+        # print the process name
+        #echo the process name is: $(basename "$0")
+        # print each parameter number
+        #eval eval eval echo each parameter number is: $(basename "$0")_$$_$i='$'$(basename "$0")_$$_$i
+        if [[ `eval eval eval echo '$'$(basename "$0")_$$_$i` = $1 ]]; then
             return 0
         fi
     done

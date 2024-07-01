@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function PrintUsage {
+    if [ -n "${SORAS_DIRECTORY}" ]; then
+        echo -n "$0: "
+        cat "${SORAS_DIRECTORY}/share/soras/help/$0.txt"
+    else
+        echo "$0: no usage file"
+    fi
+}

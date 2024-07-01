@@ -1,0 +1,20 @@
+#!/bin/bash
+
+function CheckPermission() {
+    if [ "$1" = "root" ]; then
+        if [ "$whoami" != "root" ]; then
+            echo "$0: you need to be root to perform this command"
+            exit 1
+        fi
+    elif [ "$1" = "any" ]; then
+        if [ "$whoami" != "root" ]; then
+            echo "$0: avoid to perform this command as root"   
+        fi
+    else
+        if [ "$whoami" = "root" ]; then
+            echo "$0: it is dangerous to perform this command as root"
+            echo "$0: you must perform this command as a non-root user"
+            exit 1
+        fi
+    fi
+}

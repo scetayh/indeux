@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source /Users/scetayh/Documents/repos/soras/lib/soras/iFormatParameter
+A --help
