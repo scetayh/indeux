@@ -21,7 +21,7 @@ fi
 mkdir -p ./.indeux/
 
 echo -e "* Removing index:"
-#find . -name 'index.txt' -type f -print -exec rm -rf {} \;
+#find . -name '.index.txt' -type f -print -exec rm -rf {} \;
 find . -name 'index.html' -type f -print -exec rm -rf {} \;
 echo
 
@@ -44,17 +44,17 @@ if [ "$(wc -l < ./.indeux/directories.txt )" -gt 0 ]; then
         #{
         #    echo "Index of /"
         #    echo
-        #} > index.txt
-        #ls -1F >> index.txt
+        #} > .index.txt
+        #ls -1F >> .index.txt
 
         # 写入各子目录.txt索引的标题
         #{
         #    echo -n "Index of /"
         #    eval sed -n '${i}p' ./.indeux/directories.txt
         #    echo
-        #} > "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/index.txt"
-        #ls -1F "$(pwd)"/"$(eval sed -n '${i}p' ./.indeux/directories.txt)" >> "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/index.txt"
-        #sed -i '' 's/\*//' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/index.txt" # 去除星号
+        #} > "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.index.txt"
+        #ls -1F "$(pwd)"/"$(eval sed -n '${i}p' ./.indeux/directories.txt)" >> "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.index.txt"
+        #sed -i '' 's/\*//' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.index.txt" # 去除星号
 
         # 写入各子目录.html索引
         {
@@ -68,20 +68,20 @@ if [ "$(wc -l < ./.indeux/directories.txt )" -gt 0 ]; then
             echo "        <pre>"
             echo "<a href=\"../\">../</a>"
         } >> "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/index.html"
-        ls -1F "$(pwd)"/"$(eval sed -n '${i}p' ./.indeux/directories.txt)" > "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/items.txt"
-        sed -i '' 's/\*//' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/items.txt" # 去除星号
-        if [ $(wc -l < "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/items.txt" ) -gt 0 ]; then
-            for ((j=1; j<=$(wc -l < "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/items.txt"); j++)); do # 创建每一行项目
+        ls -1F "$(pwd)"/"$(eval sed -n '${i}p' ./.indeux/directories.txt)" > "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt"
+        sed -i '' 's/\*//' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt" # 去除星号
+        if [ $(wc -l < "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt" ) -gt 0 ]; then
+            for ((j=1; j<=$(wc -l < "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt"); j++)); do # 创建每一行项目
                 {
                     echo -n "<a href=\""
-                    echo -n $(eval sed -n '${j}p' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/items.txt")
+                    echo -n $(eval sed -n '${j}p' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt")
                     echo -n "\">"
-                    echo -n $(eval sed -n '${j}p' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/items.txt")
+                    echo -n $(eval sed -n '${j}p' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt")
                     echo "</a>"
                 } >> "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/index.html"
             done
         fi
-        rm -f "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/items.txt"
+        rm -f "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt"
         {
             echo "        </pre>"
             echo "        <hr>"
@@ -91,4 +91,4 @@ if [ "$(wc -l < ./.indeux/directories.txt )" -gt 0 ]; then
     done
 fi
 
-find . -name 'items.txt' -type f -print -exec rm -rf {} \;
+find . -name '.items.txt' -type f -print -exec rm -rf {} \;
