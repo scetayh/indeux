@@ -11,8 +11,6 @@ mkdir -pv /opt/indeux/
 
 cp -rv ./* /opt/indeux/
 
-rm -rfv /opt/indeux/install.sh
-rm -rfv /opt/indeux/LICENSE
 mv -v /opt/indeux/scripts/indeux{.sh,}
 mv -v /opt/indeux/scripts/undeux{.sh,}
 
