@@ -35,11 +35,11 @@ sudo ./install.sh
 
 ## 使用
 
-直接在你想要建立索引的目录下执行`sudo indeux`命令。`indeux`在创建索引的同时会在`./.indeux/`目录下记录每次创建的索引。
+直接在你想要建立索引的目录下执行`sudo indeux init && sudo index gen`命令。`indeux`在创建索引的同时会在`./.indeux/`目录下记录每次创建的索引。
 
 创建完成后，更新页面即可。在GitHub Pages中，你只需要执行`git commit -a && git push`。[示例页面戳此](https://commons.tarikko-scetayhchan.top)。
 
-如果想要删除索引，执行`sudo undeux`命令。
+如果想要删除索引，执行`sudo indeux remove`命令。
 
 如果想要删除记录，执行`sudo rm -rf ./.indeux/`命令。
 
