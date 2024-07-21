@@ -16,10 +16,14 @@ rm -rfv /opt/indeux/LICENSE
 mv -v /opt/indeux/scripts/indeux{.sh,}
 mv -v /opt/indeux/scripts/undeux{.sh,}
 
-echo "chmod -w +x /opt/indeux/scripts/*"
-chmod -w +x /opt/indeux/scripts/*
+echo "chmod -w /opt/indeux/scripts/*"
+chmod -w /opt/indeux/scripts/*
+echo "chmod +x /opt/indeux/scripts/*"
+chmod +x /opt/indeux/scripts/*
 
-echo "/opt/indeux/scripts >> /etc/paths"
-echo "/opt/indeux/scripts" >> /etc/paths
+echo "echo /opt/indeux/scripts >> /etc/paths"
+echo /opt/indeux/scripts >> /etc/paths
+echo "source /etc/paths"
+source /etc/paths
 
 echo "Succeeded to install indeux."
