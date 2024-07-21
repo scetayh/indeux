@@ -63,7 +63,7 @@ if [ "$(wc -l < ./.indeux/directories.txt )" -gt 0 ]; then
             echo "        <title>Index of /$(eval sed -n ${i}p ./.indeux/directories.txt)</title>"
             echo "    </head>"
             echo "    <body>"
-            echo "        <h1>/$(eval sed -n ${i}p ./.indeux/directories.txt)</h1>"
+            echo "        <h1>Index of /$(eval sed -n ${i}p ./.indeux/directories.txt)</h1>"
             echo "        <hr>"
             echo "        <pre>"
             echo "<a href=\"../\">../</a>"
