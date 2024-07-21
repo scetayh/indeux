@@ -7,7 +7,7 @@ if [ "$(whoami)" != "root" ]; then
     exit 1
 fi
 
-mdkir -pv /opt/
+mkdir -pv /opt/
 
 cp -rv . /opt/
 
