@@ -60,7 +60,7 @@ if [ "$(wc -l < ./.indeux/directories.txt )" -gt 0 ]; then
         {
             echo "<html>"
             echo "    <head>"
-            echo "        <title>/$(eval sed -n ${i}p ./.indeux/directories.txt)</title>"
+            echo "        <title>Index of /$(eval sed -n ${i}p ./.indeux/directories.txt)</title>"
             echo "    </head>"
             echo "    <body>"
             echo "        <h1>/$(eval sed -n ${i}p ./.indeux/directories.txt)</h1>"
@@ -90,3 +90,5 @@ if [ "$(wc -l < ./.indeux/directories.txt )" -gt 0 ]; then
         } >> "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/index.html"
     done
 fi
+
+find . -name 'items.txt' -type f -print -exec rm -rf {} \;
