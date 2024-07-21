@@ -18,7 +18,7 @@ if [ "$(whoami)" != "root" ]; then
     exit 1
 fi
 
-if [ "$1" != "--version" ]; then
+if [ "$1" == "--version" ]; then
     echo "_______________________________________________________________
 |                            indeux                             |
 |            <github.com/Tarikko-ScetayhChan/indeux>            |
