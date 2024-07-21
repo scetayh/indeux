@@ -51,7 +51,7 @@ elif [ "$1" = "gen" ]; then
                 echo "        <title>${indeux_titlePrefix}$(eval sed -n ${i}p ./.indeux/directories.txt)</title>"
                 echo "    </head>"
                 echo "    <body style=\"background-color: ${indeux_backgroundColor}\">"
-                echo "    <link rel=\"stylesheet\" href=\"//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext\">"
+                #echo "    <link rel=\"stylesheet\" href=\"//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext\">"
                 echo "        <style type=\"text/css\">"
 	            echo "        body{"
 		        echo "            background: url("${indeux_background}") no-repeat center center fixed;"
