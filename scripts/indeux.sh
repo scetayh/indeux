@@ -27,7 +27,7 @@ echo
 
 Indeux_InterateForDirectories . > ./.indeux/directories.txt
 echo -e "* Looking for directories:"
-cp ./.indeux/directories.txt "./.indeux/directories-$(date +%Y%m%dT%H%M%SZ) .txt"
+cp ./.indeux/directories.txt "./.indeux/directories-$(date +%Y%m%dT%H%M%SZ).txt"
 cat ./.indeux/directories.txt
 sed -i '' 's/..//' ./.indeux/directories.txt # 删除每一行的前1个字符
 echo -e "* $(wc -l < ./.indeux/directories.txt) directories in total.\n"
