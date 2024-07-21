@@ -2,12 +2,13 @@
 
 set -e
 
-if [ "$(whoami)" != "root" ]; then
-    echo "This script must be runned as root."
-    exit 1
-fi
+source ./functions
+
+Indeux_CheckPermission
 
 echo "rm -rfv /opt/indeux/"
 rm -rfv /opt/indeux/
+
+sed -i '' 's/\/opt\/indeux//g' /etc/paths
 
 echo "Succeeded to uninstall indeux."

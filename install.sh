@@ -2,25 +2,23 @@
 
 set -e
 
-if [ "$(whoami)" != "root" ]; then
-    echo "This script must be runned as root."
-    exit 1
-fi
+source ./functions
+
+Indeux_CheckPermission
 
 mkdir -pv /opt/indeux/
 
 cp -rv ./* /opt/indeux/
 
-mv -v /opt/indeux/scripts/indeux{.sh,}
-mv -v /opt/indeux/scripts/undeux{.sh,}
+mv -v /opt/indeux/indeux{.sh,}
 
-echo "chmod -w /opt/indeux/scripts/*"
-chmod -w /opt/indeux/scripts/*
-echo "chmod +x /opt/indeux/scripts/*"
-chmod +x /opt/indeux/scripts/*
+echo "chmod -w /opt/indeux/indeux"
+chmod -w /opt/indeux/indeux
+echo "chmod +x /opt/indeux/sindeux"
+chmod +x /opt/indeux/indeux
 
-echo "echo /opt/indeux/scripts >> /etc/paths"
-echo /opt/indeux/scripts >> /etc/paths
+echo "echo /opt/indeux/ >> /etc/paths"
+echo /opt/indeux/ >> /etc/paths
 echo "source /etc/paths"
 source /etc/paths
 
