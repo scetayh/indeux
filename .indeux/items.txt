@@ -1,5 +1,0 @@
-/Users/scetayh/Documents/repos/indeux/
-/Users/scetayh/Documents/repos/indeux//a
-/Users/scetayh/Documents/repos/indeux//b
-/Users/scetayh/Documents/repos/indeux//c
-/Users/scetayh/Documents/repos/indeux//scripts
