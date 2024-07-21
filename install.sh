@@ -7,13 +7,14 @@ if [ "$(whoami)" != "root" ]; then
     exit 1
 fi
 
-mkdir -pv /opt/
+mkdir -pv /opt/indeux/
 
-cp -rv . /opt/
+cp -rv ./* /opt/indeux/
 
 rm -rfv /opt/indeux/install.sh
 rm -rfv /opt/indeux/LICENSE
-mv -v /opt/indeux/scripts/*{.sh,}
+mv -v /opt/indeux/scripts/indeux{.sh,}
+mv -v /opt/indeux/scripts/undeux{.sh,}
 
 echo "chmod -w +x /opt/indeux/scripts/*"
 chmod -w +x /opt/indeux/scripts/*
