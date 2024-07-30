@@ -57,5 +57,5 @@ function Indeux_Init() {
 }
 
 function Indeux_PrintUsage() {
-    echo "Usage: indeux [ init | version | gen ]"
+    echo "Usage: indeux [ init | remove | version | gen ]"
 }
