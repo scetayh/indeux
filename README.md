@@ -4,10 +4,6 @@
 
 `indeux`是一个纯Shell实现的资源共享静态页面索引创建工具。它可以帮助你为GitHub Pages等的静态页面创建各级索引（类似于各大镜像站），以达到文件查看和下载的目的。
 
-`indeux`命令用于创建索引。它既是index的谐音，deux又是法文数字2。
-
-`undeux`命令用于删除索引。un-前缀表明它和`indeux`相反，同时un是法文数字1，deux是法文数字2。
-
 ## 原理
 
 `indeux`依靠Shell脚本和`coreutils`各核心工具来实现，基本操作是输入输出流、字符串处理和文件操作。
@@ -35,6 +31,12 @@ sudo ./install.sh
 
 ## 使用
 
+执行`sudo indeux help`以获取帮助：
+
+```
+Usage: indeux [ init | remove | version | gen ]
+```
+
 直接在你想要建立索引的目录下执行`sudo indeux init && sudo index gen`命令。`indeux`在创建索引的同时会在`./.indeux/`目录下记录每次创建的索引。
 
 创建完成后，更新页面即可。在GitHub Pages中，你只需要执行`git commit -a && git push`。[示例页面戳此](https://commons.tarikko-scetayhchan.top)。
@@ -49,7 +51,7 @@ sudo ./install.sh
 
 ## 许可证
 
-本程序自豪地采用GNU通用公共许可证第3版（GNUv3.0）。
+本程序自豪地采用GNU通用公共许可证第3版（GPLv3.0）。
 
 ```
  _______________________________________________________________
