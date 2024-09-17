@@ -12,7 +12,7 @@ if [ "$1" = "init" ]; then
         Indeux_Init
         exit 0
     else
-        Slibs_PrintMessage_Fafal "$0" "This directory is already inited for indeux. If necessary, operate \`sudo rm -rf ./.indeux/'."
+        Slibsh_PrintMessage_Fafal "$0" "This directory is already inited for indeux. If necessary, operate \`sudo rm -rf ./.indeux/'."
         exit 1
     fi
 elif [ "$1" = "version" ]; then
@@ -23,7 +23,7 @@ elif [ "$1" = "remove" ]; then
     exit 0
 elif [ "$1" = "gen" ]; then
     if [ ! -f "./.indeux/indeux.conf" ]; then
-        Slibs_PrintMessage_Fafal "$0" "./.indeux/indeux.conf not found. Have you inited this directory for indeux?"
+        Slibsh_PrintMessage_Fafal "$0" "./.indeux/indeux.conf not found. Have you inited this directory for indeux?"
         exit 1
     fi
 
@@ -35,7 +35,7 @@ elif [ "$1" = "gen" ]; then
     echo -e "* Looking for directories:"
     cp ./.indeux/directories.txt "./.indeux/directories-$(date +%Y%m%dT%H%M%SZ).txt"
     cat ./.indeux/directories.txt
-    sed -i '' 's/..//' ./.indeux/directories.txt # 删除每一行的前1个字符
+    sed -i 's/..//' ./.indeux/directories.txt # 删除每一行的前1个字符
     echo -e "* $(wc -l < ./.indeux/directories.txt) directories in total.\n"
 
     echo "* Creating index:"
@@ -67,7 +67,7 @@ elif [ "$1" = "gen" ]; then
                 echo "<a href=\"../\">../</a>"
             } >> "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/index.html"
             ls -1F "$(pwd)"/"$(eval sed -n '${i}p' ./.indeux/directories.txt)" > "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt"
-            sed -i '' 's/\*//' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt" # 去除星号
+            sed -i 's/\*//' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt" # 去除星号
             if [ $(wc -l < "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt" ) -gt 0 ]; then
                 for ((j=1; j<=$(wc -l < "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt"); j++)); do # 创建每一行项目
                     {

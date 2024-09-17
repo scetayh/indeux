@@ -10,7 +10,7 @@
 
 `indeux`遍历所在目录下的所有子目录和文件，并用Shell变量相关来实现，最后添加至各级文件夹的索引`index.html`。
 
-使用`indeux`，你需要有类UNIX操作系统环境（GNU/Linux、Darwin、macOS、BSD、UNIX、WSL、WSL2）、类`coreutils`或`busybox`核心实用工具和一个shell（如`bash`和`zsh`）。
+使用`indeux`，你需要有类UNIX操作系统环境（GNU/Linux、Darwin、macOS、BSD、UNIX、WSL、WSL2）、类`coreutils`或`busybox`核心实用工具(**必须使用GNU Sed，不允许使用Darwin和macOS的sed，否则可能会引发出乎意料的结果**)和一个shell（如`bash`和`zsh`）。
 
 ## 安装
 
@@ -37,11 +37,11 @@ Usage: indeux [ init | remove | version | gen ]
 
 直接在你想要建立索引的目录下执行`sudo indeux init && sudo index gen`命令。`indeux`在创建索引的同时会在`./.indeux/`目录下记录每次创建的索引。
 
-创建完成后，更新页面即可。在GitHub Pages中，你只需要执行`git commit -a && git push`。[示例页面戳此](https://commons.tarikko-scetayhchan.top)。
+创建完成后，更新页面即可。在GitHub Pages中，你只需要执行`git add . && git commit -a && git push --set-upstream origin main`。[示例页面戳此](https://commons.tarikkochan.top)。
 
 如果想要删除索引，执行`sudo indeux remove`命令。
 
-如果想要删除记录，执行`sudo rm -rf ./.indeux/`命令。
+如果想要删除记录，执行`sudo rm -rfv ./.indeux/`命令。
 
 ## 问题
 

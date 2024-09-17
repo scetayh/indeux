@@ -52,7 +52,7 @@ function Indeux_CheckPermission() {
 function Indeux_Init() {
     echo "* Copying necessary files..."
     mkdir -p ./.indeux/
-    cp /opt/indeux/indeux.conf.example ./.indeux/indeux.conf
+    cp /usr/local/share/doc/indeux/indeux.conf.example ./.indeux/indeux.conf
     echo "* Directory inited for indeux."
 }
 

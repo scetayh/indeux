@@ -1,12 +1,11 @@
 #!/bin/bash
-
-## compiler: ssc-0.0.1-b5
+ 
+## compiler: ssc-0.0.1-b9
 ## host: Darwin YupyeSortaco.local 24.0.0 Darwin Kernel Version 24.0.0: Mon Aug 12 20:54:26 PDT 2024; root:xnu-11215.1.10~2/RELEASE_ARM64_T8112 arm64 arm Darwin
-## date: 20240917T102703Z
-
+## date: 20240917T161710Z
+ 
 #!/bin/bash
 
-## include >>>
 Indeux_CheckPermission () 
 { 
     if [ "$(whoami)" != "root" ]; then
@@ -18,7 +17,7 @@ Indeux_Init ()
 { 
     echo "* Copying necessary files...";
     mkdir -p ./.indeux/;
-    cp /opt/indeux/indeux.conf.example ./.indeux/indeux.conf;
+    cp /usr/local/share/doc/indeux/indeux.conf.example ./.indeux/indeux.conf;
     echo "* Directory inited for indeux."
 }
 Indeux_InterateForDirectories () 
@@ -121,12 +120,49 @@ Slibsh_PrintMessage_Warning ()
 { 
     Slibsh_PrintMessage "$1" w "$2"
 }
+Ssc_CheckFiles () 
+{ 
+    [ ! -f "$ssc_source" ] && Slibsh_PrintMessage_Fafal_ItemNotFound "$0" "$ssc_source" && exit 1;
+    [ -f "$ssc_target" ] && Slibsh_PrintMessage_Fafal_ItemExists "$0" "$ssc_target" && exit 1;
+    [ ! "${ssc_source: -5}" = ".s.sh" ] && Slibsh_PrintMessage_Fafal_InvalidExtensionName "$0" "$ssc_source" && exit 1
+}
+Ssc_CheckParameters () 
+{ 
+    if [ "$#" -ne 2 ]; then
+        if [ "$#" -eq 0 ]; then
+            Slibsh_PrintMessage_Fafal_SourceExpected "$0";
+        else
+            if [ "$#" -eq 1 ]; then
+                Slibsh_PrintMessage_Fafal_TargetExpected "$0";
+            else
+                if [ "$#" -gt 2 ]; then
+                    Slibsh_PrintMessage_Fafal_TooManyArguments "$0";
+                fi;
+            fi;
+        fi;
+        exit 1;
+    fi
+}
+Ssc_DeleteComments () 
+{ 
+    sed -i '/#/!b;s/^/\n/;ta;:a;s/\n$//;t;s/\n\(\("[^"]*"\)\|\('\''[^'\'']*'\''\)\)/\1\n/;ta;s/\n\([^#]\)/\1\n/;ta;s/\n.*//' "$1"
+}
+Ssc_PrintBrand () 
+{ 
+    echo "$ssc_name (Soras Shell Compiler $ssc_version) $ssc_version";
+    echo "Copyright (C) 2024 Tarikko-ScetayhChan";
+    echo "This is free software; see the source for copying conditions.  There is NO";
+    echo "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+}
 Ssc_WriteCompilationInformation () 
 { 
-    echo "$ssc_compilationInfo" >> "$ssc_target"
+    sed -i "1i\## date: $(date +%Y%m%dT%H%M%SZ)" "$ssc_target";
+    sed -i "1i\## host: $(uname -a)" "$ssc_target";
+    sed -i "1i\## compiler: $ssc_name-$ssc_version" "$ssc_target";
+    sed -i '1i\#!/bin/bash' "$ssc_target";
+    sed -i '1a\ ' "$ssc_target";
+    sed -i '5a\ ' "$ssc_target"
 }
-## <<<
-
 
 Indeux_CheckPermission
 
@@ -135,7 +171,7 @@ if [ "$1" = "init" ]; then
         Indeux_Init
         exit 0
     else
-        Slibs_PrintMessage_Fafal "$0" "This directory is already inited for indeux. If necessary, operate \`sudo rm -rf ./.indeux/'."
+        Slibsh_PrintMessage_Fafal "$0" "This directory is already inited for indeux. If necessary, operate \`sudo rm -rf ./.indeux/'."
         exit 1
     fi
 elif [ "$1" = "version" ]; then
@@ -146,7 +182,7 @@ elif [ "$1" = "remove" ]; then
     exit 0
 elif [ "$1" = "gen" ]; then
     if [ ! -f "./.indeux/indeux.conf" ]; then
-        Slibs_PrintMessage_Fafal "$0" "./.indeux/indeux.conf not found. Have you inited this directory for indeux?"
+        Slibsh_PrintMessage_Fafal "$0" "./.indeux/indeux.conf not found. Have you inited this directory for indeux?"
         exit 1
     fi
 
@@ -158,7 +194,7 @@ elif [ "$1" = "gen" ]; then
     echo -e "* Looking for directories:"
     cp ./.indeux/directories.txt "./.indeux/directories-$(date +%Y%m%dT%H%M%SZ).txt"
     cat ./.indeux/directories.txt
-    sed -i '' 's/..//' ./.indeux/directories.txt # 删除每一行的前1个字符
+    sed -i 's/..//' ./.indeux/directories.txt # 删除每一行的前1个字符
     echo -e "* $(wc -l < ./.indeux/directories.txt) directories in total.\n"
 
     echo "* Creating index:"
@@ -190,7 +226,7 @@ elif [ "$1" = "gen" ]; then
                 echo "<a href=\"../\">../</a>"
             } >> "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/index.html"
             ls -1F "$(pwd)"/"$(eval sed -n '${i}p' ./.indeux/directories.txt)" > "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt"
-            sed -i '' 's/\*//' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt" # 去除星号
+            sed -i 's/\*//' "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt" # 去除星号
             if [ $(wc -l < "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt" ) -gt 0 ]; then
                 for ((j=1; j<=$(wc -l < "./$(eval sed -n '${i}p' ./.indeux/directories.txt)/.items.txt"); j++)); do # 创建每一行项目
                     {
