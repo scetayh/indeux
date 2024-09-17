@@ -21,13 +21,11 @@ git clone https://github.com/Tarikko-ScetayhChan/indeux.git
 cd ./indeux/
 ```
 
-运行安装脚本，它将复制必要的文件到`/opt/indeux/`并添加环境变量：
+编译安装：
 
 ```
-sudo ./install.sh
+make && sudo make install
 ```
-
-同理，如果你想要卸载`indeux`，运行`sudo ./uninstall.sh`即可。
 
 ## 使用
 
