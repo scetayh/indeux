@@ -1,10 +1,14 @@
 #!/bin/bash
  
-## compiler: ssc-0.0.1-b9
-## host: Darwin YupyeSortaco.local 24.0.0 Darwin Kernel Version 24.0.0: Mon Aug 12 20:54:26 PDT 2024; root:xnu-11215.1.10~2/RELEASE_ARM64_T8112 arm64 arm Darwin
-## date: 20240917T161710Z
+################################################################
+## compiler: ssc-0.0.1
+## host: Darwin YupyeSortaco.local 24.1.0 Darwin Kernel Version 24.1.0: Tue Sep 17 07:48:04 PDT 2024; root:xnu-11215.40.59~38/RELEASE_ARM64_T8112 arm64 arm Darwin
+## date: 20241019T180022Z
+################################################################
  
 #!/bin/bash
+
+#.soras 0
 
 Indeux_CheckPermission () 
 { 
@@ -149,24 +153,26 @@ Ssc_DeleteComments ()
 }
 Ssc_PrintBrand () 
 { 
-    echo "$ssc_name (Soras Shell Compiler $ssc_version) $ssc_version";
+    echo "$ssc_name (SorasShell Compiler) v$ssc_version";
     echo "Copyright (C) 2024 Tarikko-ScetayhChan";
     echo "This is free software; see the source for copying conditions.  There is NO";
     echo "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
 }
 Ssc_WriteCompilationInformation () 
 { 
+    sed -i "1i\################################################################" "$ssc_target";
     sed -i "1i\## date: $(date +%Y%m%dT%H%M%SZ)" "$ssc_target";
     sed -i "1i\## host: $(uname -a)" "$ssc_target";
     sed -i "1i\## compiler: $ssc_name-$ssc_version" "$ssc_target";
+    sed -i "1i\################################################################" "$ssc_target";
     sed -i '1i\#!/bin/bash' "$ssc_target";
     sed -i '1a\ ' "$ssc_target";
-    sed -i '5a\ ' "$ssc_target"
+    sed -i '7a\ ' "$ssc_target"
 }
 
-Indeux_CheckPermission
-
 if [ "$1" = "init" ]; then
+    Indeux_CheckPermission
+
     if [ ! -d "./.indeux" ]; then
         Indeux_Init
         exit 0
@@ -178,9 +184,13 @@ elif [ "$1" = "version" ]; then
     Indeux_PrintBrand
     exit 0
 elif [ "$1" = "remove" ]; then
+    Indeux_CheckPermission
+
     Indeux_RemoveIndex
     exit 0
 elif [ "$1" = "gen" ]; then
+    Indeux_CheckPermission
+    
     if [ ! -f "./.indeux/indeux.conf" ]; then
         Slibsh_PrintMessage_Fafal "$0" "./.indeux/indeux.conf not found. Have you inited this directory for indeux?"
         exit 1
