@@ -49,6 +49,10 @@ function Indeux_CheckPermission() {
     fi
 }
 
+function Induex_DirectoryNotInited () {
+    Slibsh_PrintMessage_Fafal "$0" "./.indeux/indeux.conf not found. Have you inited this directory for indeux?";
+}
+
 function Indeux_Init() {
     echo "* Copying necessary files..."
     mkdir -p ./.indeux/
@@ -56,6 +60,17 @@ function Indeux_Init() {
     echo "* Directory inited for indeux."
 }
 
+function Indeux_List () {
+    if [ ! -f "./.indeux/indeux.conf" ]; then {
+        Induex_DirectoryNotInited;
+
+        exit 1;
+    }
+    fi;
+
+    ls -1 ./.indeux | grep directories- | sed 's/directories-//g' | sed 's/.txt//g' | cat -n
+}
+
 function Indeux_PrintUsage() {
-    echo "Usage: indeux [ init | remove | version | gen ]"
+    echo "Usage: indeux [ init | uninit | remove | version | gen | list ]"
 }

@@ -3,7 +3,7 @@
 ################################################################
 ## compiler: ssc-0.0.1
 ## host: Darwin YupyeSortaco.local 24.1.0 Darwin Kernel Version 24.1.0: Tue Sep 17 07:48:04 PDT 2024; root:xnu-11215.40.59~38/RELEASE_ARM64_T8112 arm64 arm Darwin
-## date: 20241026T220614Z
+## date: 20241026T223925Z
 ################################################################
  
 #!/bin/bash
@@ -34,6 +34,16 @@ Indeux_InterateForDirectories ()
         fi;
     done
 }
+Indeux_List () 
+{ 
+    if [ ! -f "./.indeux/indeux.conf" ]; then
+        { 
+            Induex_DirectoryNotInited;
+            exit 1
+        };
+    fi;
+    ls -1 ./.indeux | grep directories- | sed 's/directories-//g' | sed 's/.txt//g' | cat -n
+}
 Indeux_PrintBrand () 
 { 
     echo "_______________________________________________________________";
@@ -62,13 +72,17 @@ Indeux_PrintBrand ()
 }
 Indeux_PrintUsage () 
 { 
-    echo "Usage: indeux [ init | remove | version | gen ]"
+    echo "Usage: indeux [ init | uninit | remove | version | gen | list ]"
 }
 Indeux_RemoveIndex () 
 { 
     echo -e "* Removing index:";
     find . -name 'index.html' -type f -print -exec rm -rf {} \;;
     echo
+}
+Induex_DirectoryNotInited () 
+{ 
+    Slibsh_PrintMessage_Fafal "$0" "./.indeux/indeux.conf not found. Have you inited this directory for indeux?"
 }
 Slibsh_PrintMessage () 
 { 
@@ -201,7 +215,7 @@ elif [ "$1" = "gen" ]; then {
     Indeux_CheckPermission;
 
     if [ ! -f "./.indeux/indeux.conf" ]; then {
-        Slibsh_PrintMessage_Fafal "$0" "./.indeux/indeux.conf not found. Have you inited this directory for indeux?";
+        Induex_DirectoryNotInited;
 
         exit 1;
     }
@@ -276,6 +290,13 @@ elif [ "$1" = "gen" ]; then {
         done
     }
     fi;
+}
+elif [ "$1" = "uninit" ]; then {
+    rm -rf ./.indeux;
+    echo "* Succeeded to uninitalize this directory.";
+}
+elif [ "$1" = "uninit" ]; then {
+    Indeux_List;
 }
 else {
     Indeux_PrintUsage;
