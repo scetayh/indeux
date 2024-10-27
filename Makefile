@@ -26,7 +26,7 @@ install:
 		mkdir -p /usr/local/bin && \
 		cp bin/* /usr/local/bin/; \
 		mkdir -pv /usr/local/share/doc/${PROJECT_NAME} && \
-		cp indeux.conf.example /usr/local/share/doc/${PROJECT_NAME}/; \
+		cp indeux.conf /usr/local/share/doc/${PROJECT_NAME}/; \
 	elif [ ${PROJECT_TYPE} = lib ]; then \
 		mkdir -p /usr/local/lib/${PROJECT_NAME} && \
 		cp lib/* /usr/local/lib/${PROJECT_NAME}/ && \
