@@ -1,6 +1,9 @@
 #!/bin/bash
 
 function indeux.printUsage () {
+    printf "indeux v2.0.1"\\n;
+    printf "Copyright (C) 2024 Tarikko-ScetayhChan"\\n;
+    printf \\n;
     printf "usage: indeux <option>"\\n;
     printf \\n;
     printf "options:"\\n;
