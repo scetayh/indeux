@@ -1,12 +1,4 @@
 #!/bin/bash
- 
-################################################################
-## compiler: ssc-0.0.1
-## host: Darwin YupyeSortaco.local 24.1.0 Darwin Kernel Version 24.1.0: Tue Sep 17 07:48:04 PDT 2024; root:xnu-11215.40.59~38/RELEASE_ARM64_T8112 arm64 arm Darwin
-## date: 20241102T221238Z
-################################################################
- 
-#!/bin/bash
 
 function indeux.printUsage () {
     printf "usage: indeux <option>"\\n;

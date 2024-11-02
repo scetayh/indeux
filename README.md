@@ -18,61 +18,44 @@
 
 ```
 git clone https://github.com/Tarikko-ScetayhChan/indeux.git
-cd ./indeux/
+cd indeux
+```
+
+安装已编译的文件：
+
+```
+sudo make install
 ```
 
 编译安装：
 
 ```
-make && sudo make install
+make clean && make && sudo make install
 ```
 
 ## 使用
 
-执行`sudo indeux help`以获取帮助：
+执行`indeux -h`以获取帮助：
 
 ```
-Usage: indeux [ init | remove | version | gen ]
+usage: indeux <option>
+
+options:
+  -i    init this directory for indeux
+  -u    uninit this directory for indeux
+  -g    generate index
+  -r    remove index
+  -h    print this message
 ```
 
-直接在你想要建立索引的目录下执行`sudo indeux init && sudo index gen`命令。`indeux`在创建索引的同时会在`./.indeux/`目录下记录每次创建的索引。
+直接在你想要建立索引的目录下执行`sudo indeux -i && sudo index -g`命令。`indeux`在创建索引的同时会在`.indeux`目录下记录每次创建的索引。
 
 创建完成后，更新页面即可。在GitHub Pages中，你只需要执行`git add . && git commit -a && git push --set-upstream origin main`。[示例页面戳此](https://commons.tarikkochan.top)。
 
-如果想要删除索引，执行`sudo indeux remove`命令。
+如果想要删除索引，执行`sudo indeux -r`命令。
 
-如果想要删除记录，执行`sudo rm -rfv ./.indeux/`命令。
+如果想要删除记录，执行`sudo indeux -u`命令。
 
 ## 问题
 
 不能按文件类型（目录、文件）排序。~~我太懒了~~
-
-## 许可证
-
-本程序自豪地采用GNU通用公共许可证第3版（GPLv3.0）。
-
-```
- _______________________________________________________________
-|                            indeux                             |
-|            <github.com/Tarikko-ScetayhChan/indeux>            |
-|                                                               |
-|              Copyright 2024 Tarikko-ScetayhChan               |
-|                  <weychon_lyon@outlook.com>                   |
-|                <blog.tarikko-scetayhchan.top>                 |
-|===============================================================|
-|                                                               |
-| This program is free software: you can redistribute it and/or |
-| modify it under the terms of the GNU General Public License   |
-| as published by the Free Software Foundation, either version  |
-| 3 of the License, or (at your option) any later version.      |
-|                                                               |
-| This program is distributed in the hope that it will be       |
-| useful, but WITHOUT ANY WARRANTY; without even the implied    |
-| warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR       |
-| PURPOSE. See the GNU General Public License for more details. |
-| You should have received a copy of the GNU General Public     |
-| License along with this program. If not, see                  |
-| <https://www.gnu.org/licenses/>.                              |
-|                                                               |
-|_______________________________________________________________|
-```
