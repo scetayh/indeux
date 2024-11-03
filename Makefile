@@ -1,8 +1,8 @@
 PROJECT_NAME = indeux
-RELEASE_VERSION = 2.0.4
+RELEASE_VERSION = 2.0.5
 GIT_REMOTE_ADDRESS = git@github.com:scetayh/indeux
 
-.PHONY: clean install uninstall pull strap commit tag remote debug release
+.PHONY: clean install uninstall pull strap commit tag remote debug release revoke
 
 ${PROJECT_NAME}:
 	mkdir -p bin
@@ -74,3 +74,15 @@ release:
 	make tag
 	make remote
 	git push --set-upstream --tags origin main
+
+revoke:
+	@printf \\n
+	@printf "  Removing tag for \e[093m${PROJECT_NAME}\e[0m."\\n
+	@printf "    \e[092mProject name\e[0m: \e[093m${PROJECT_NAME}\e[0m"\\n
+	@printf "    \e[092mTag (Revoke version, in shell variable version)\e[0m: \e[093m${version}\e[0m"\\n
+	@printf "  Press \e[091many key\e[0m to continue or \e[091mCTRL-C\e[0m to pause."
+	@read -s -n1
+	@printf \\n
+	@printf \\n
+	git tag -d v${version}
+	git push origin :refs/tags/v${version}
