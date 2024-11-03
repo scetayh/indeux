@@ -28,19 +28,19 @@ function indeux.throwExceptionInvalidOption () {
 function indeux.initDirectory () {
     if mkdir .indeux &> /dev/null; then {
         printf "created directory \`.indeux'"\\n;
-        if [ -f /usr/local/share/doc/indeux/indeux.conf.example ]; then {
-            if cp /usr/local/share/doc/indeux/indeux.conf.example .indeux &> /dev/null; then {
-                printf "copied file \`indeux.conf'"\\n;
+        if [ -f /usr/local/share/doc/indeux/index.conf ]; then {
+            if cp /usr/local/share/doc/indeux/index.conf .indeux &> /dev/null; then {
+                printf "copied file \`index.conf'"\\n;
                 printf "succeeded to initialize this directory for indeux"\\n;
             }
             else {
-                printf "$0: failed to copy file \`indeux.conf'"\\n;
+                printf "$0: failed to copy file \`index.conf'"\\n;
                 exit 1;
             }
             fi;
         }
         else {
-            printf "$0: cannot find file \`/usr/local/share/doc/indeux/indeux.conf.example'"\\n;
+            printf "$0: cannot find file \`/usr/local/share/doc/indeux/index.conf'"\\n;
             exit 1;
         }
         fi;
@@ -173,6 +173,7 @@ while getopts "ghilru" OPT; do {
     case "$OPT" in
         g)
             indeux.checkInited;
+            source /etc/indeux.conf;
             indeux.checkPermission;
             indeux.genIndex;
             exit 0;

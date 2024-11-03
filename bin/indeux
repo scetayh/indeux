@@ -3,7 +3,7 @@
 ################################################################
 ## compiler: ssc-0.0.1
 ## host: Darwin YupyeSortaco.local 24.1.0 Darwin Kernel Version 24.1.0: Tue Sep 17 07:48:04 PDT 2024; root:xnu-11215.40.59~38/RELEASE_ARM64_T8112 arm64 arm Darwin
-## date: 20241103T112407Z
+## date: 20241103T120033Z
 ################################################################
  
 #!/bin/bash
@@ -36,19 +36,19 @@ function indeux.throwExceptionInvalidOption () {
 function indeux.initDirectory () {
     if mkdir .indeux &> /dev/null; then {
         printf "created directory \`.indeux'"\\n;
-        if [ -f /usr/local/share/doc/indeux/indeux.conf.example ]; then {
-            if cp /usr/local/share/doc/indeux/indeux.conf.example .indeux &> /dev/null; then {
-                printf "copied file \`indeux.conf'"\\n;
+        if [ -f /usr/local/share/doc/indeux/index.conf ]; then {
+            if cp /usr/local/share/doc/indeux/index.conf .indeux &> /dev/null; then {
+                printf "copied file \`index.conf'"\\n;
                 printf "succeeded to initialize this directory for indeux"\\n;
             }
             else {
-                printf "$0: failed to copy file \`indeux.conf'"\\n;
+                printf "$0: failed to copy file \`index.conf'"\\n;
                 exit 1;
             }
             fi;
         }
         else {
-            printf "$0: cannot find file \`/usr/local/share/doc/indeux/indeux.conf.example'"\\n;
+            printf "$0: cannot find file \`/usr/local/share/doc/indeux/index.conf'"\\n;
             exit 1;
         }
         fi;
@@ -181,6 +181,7 @@ while getopts "ghilru" OPT; do {
     case "$OPT" in
         g)
             indeux.checkInited;
+            source /etc/indeux.conf;
             indeux.checkPermission;
             indeux.genIndex;
             exit 0;
