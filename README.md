@@ -38,7 +38,7 @@ cd indeux
 sudo make install
 ```
 
-编译安装：
+或编译安装：
 
 ```
 make strap

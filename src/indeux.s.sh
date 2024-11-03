@@ -79,7 +79,7 @@ function indeux.checkUninited () {
 function indeux.removeIndex () {
     printf "removing index:"\\n;
     printf \\n;
-    find . -name 'index.html' -type f -print -exec rm -rf {} \;
+    find -name 'index.html' -type f -print -exec rm -rf {} \;
 }
 
 function indeux.genIndex () {
