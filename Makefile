@@ -1,52 +1,66 @@
 PROJECT_NAME = indeux
-PROJECT_VERSION = 2.0.1
-PROJECT_TYPE = bin
-GITHUB_USERNAME = scetayh
-GITHUB_REPOSITORY_NAME = indeux
+RELEASE_VERSION = 2.0.2
+GIT_REMOTE_ADDRESS = git@github.com:scetayh/indeux
 
-.PHONY: clean install uninstall all
+.PHONY: clean install uninstall pull make-install commit release commit-release strap
 
 ${PROJECT_NAME}:
-	if [ ${PROJECT_TYPE} = bin ]; then \
-		mkdir -pv bin; \
-		cd src && \
-		bash ssc ${PROJECT_NAME}-${PROJECT_VERSION}.s.sh ../bin/${PROJECT_NAME}; \
-	elif [ ${PROJECT_TYPE} = lib ]; then \
-		make install; \
-	else \
-		exit 1; \
-	fi
+	mkdir -p bin
+	cd src && \
+		ssc ${PROJECT_NAME}.s.sh ../bin/${PROJECT_NAME}
 
 clean:
-	rm -rfv bin/*
-	rm -rfv obj/*
+	rm -rf bin/*
+	rm -rf obj/*
+	rm -rf build/*
 
 install:
-	if [ ${PROJECT_TYPE} = bin ]; then \
-		mkdir -p /usr/local/bin && \
-		cp bin/* /usr/local/bin/; \
-		mkdir -pv /usr/local/share/doc/${PROJECT_NAME} && \
-		cp indeux.conf /usr/local/share/doc/${PROJECT_NAME}/; \
-	elif [ ${PROJECT_TYPE} = lib ]; then \
-		mkdir -p /usr/local/lib/${PROJECT_NAME} && \
-		cp lib/* /usr/local/lib/${PROJECT_NAME}/ && \
-		chmod 777 -R /usr/local/lib/${PROJECT_NAME}/*; \
-	else \
-		exit 1; \
-	fi
+	mkdir -p /usr/local/bin
+	cd bin && \
+		cp * /usr/local/bin
+	mkdir -p /etc
+	cd etc && \
+		cp indeux.conf /etc
+	cd /etc && \
+		chmod 444 indeux.conf; \
+		chown root indeux.conf
 
 uninstall:
-	rm -rf /usr/local/${PROJECT_TYPE}/${PROJECT_NAME}
+	cd /usr/local/bin && \
+		rm -f ${PROJECT_NAME}
+	cd /etc && \
+		rm -f indeux.conf
 
-all:
+pull:
 	git config pull.rebase false
 	git pull
+
+make-install:
 	sudo make uninstall
 	make clean
 	make
 	sudo make install
-	git remote remove origin
-	git remote add origin git@github.com:${GITHUB_USERNAME}/${GITHUB_REPOSITORY_NAME}
+
+commit:
 	git add .
-	-git commit -a -m "v${PROJECT_VERSION}"
-	git push --set-upstream origin main
+	-git commit -a
+
+release:
+	git remote remove origin
+	git remote add origin ${GIT_REMOTE_ADDRESS}
+	printf "Releasing ${PROJECT_NAME}."\\n
+	printf "  Project name: ${PROJECT_NAME}"\\n
+	printf "  Release version (tag): ${RELEASE_VERSION}"\\n
+	printf "  Git remote address: ${GIT_REMOTE_ADDRESS}"\\n
+	read -s -n1 -p "Press enter to continue or CTRL-C to pause."
+	git tag -a ${RELEASE_VERSION}
+	git push --set-upstream origin main --tags
+
+commit-release:
+	make commit
+	make release
+
+strap:
+	make pull
+	make make-install
+	make commit-release

@@ -1,6 +1,9 @@
 #!/bin/bash
 
 function indeux.printUsage () {
+    printf "indeux v${INDEUX_VERSION}"\\n;
+    printf "Copyright (C) 2024 Tarikko-ScetayhChan"\\n;
+    printf \\n;
     printf "usage: indeux <option>"\\n;
     printf \\n;
     printf "options:"\\n;
@@ -163,6 +166,8 @@ function indeux.genIndex () {
     }
     fi;
 }
+
+source /etc/indeux.conf;
 
 while getopts "ghilru" OPT; do {
     case "$OPT" in
