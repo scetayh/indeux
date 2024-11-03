@@ -1,5 +1,5 @@
 PROJECT_NAME = indeux
-RELEASE_VERSION = 2.0.2
+RELEASE_VERSION = 2.0.3
 GIT_REMOTE_ADDRESS = git@github.com:scetayh/indeux
 
 .PHONY: clean install uninstall pull make-install commit release commit-release strap
@@ -33,6 +33,7 @@ uninstall:
 
 pull:
 	git config pull.rebase false
+	-git branch --set-upstream-to=origin/main main
 	git pull
 
 make-install:
@@ -48,12 +49,15 @@ commit:
 release:
 	git remote remove origin
 	git remote add origin ${GIT_REMOTE_ADDRESS}
-	printf "Releasing ${PROJECT_NAME}."\\n
-	printf "  Project name: ${PROJECT_NAME}"\\n
-	printf "  Release version (tag): ${RELEASE_VERSION}"\\n
-	printf "  Git remote address: ${GIT_REMOTE_ADDRESS}"\\n
-	read -s -n1 -p "Press enter to continue or CTRL-C to pause."
-	git tag -a ${RELEASE_VERSION}
+	@printf \\n
+	@printf "  Releasing \e[093m${PROJECT_NAME}\e[0m."\\n
+	@printf "    \e[092mProject name\e[0m: \e[093m${PROJECT_NAME}\e[0m"\\n
+	@printf "    \e[092mRelease version (tag)\e[0m: \e[093m${RELEASE_VERSION}\e[0m"\\n
+	@printf "    \e[092mGit remote address\e[0m: \e[093m${GIT_REMOTE_ADDRESS}\e[0m"\\n
+	@printf "  Press \e[091many key\e[0m to continue or \e[091mCTRL-C\e[0m to pause."
+	@read -s -n1
+	@printf \\n
+	git tag v${RELEASE_VERSION}
 	git push --set-upstream origin main --tags
 
 commit-release:
