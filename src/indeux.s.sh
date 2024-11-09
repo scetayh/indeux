@@ -28,19 +28,19 @@ function indeux.throwExceptionInvalidOption () {
 function indeux.initDirectory () {
     if mkdir .indeux &> /dev/null; then {
         printf "created directory \`.indeux'"\\n;
-        if [ -f /usr/local/share/doc/indeux/index.conf ]; then {
-            if cp /usr/local/share/doc/indeux/index.conf .indeux &> /dev/null; then {
-                printf "copied file \`index.conf'"\\n;
+        if [ -d /usr/local/share/doc/indeux ]; then {
+            if cp -r /usr/local/share/doc/indeux/* .indeux &> /dev/null; then {
+                printf "copied necessary files"\\n;
                 printf "succeeded to initialize this directory for indeux"\\n;
             }
             else {
-                printf "$0: failed to copy file \`index.conf'"\\n;
+                printf "$0: failed to copy necessary files"\\n;
                 exit 1;
             }
             fi;
         }
         else {
-            printf "$0: cannot find file \`/usr/local/share/doc/indeux/index.conf'"\\n;
+            printf "$0: cannot find directory \`/usr/local/share/doc/indeux'"\\n;
             exit 1;
         }
         fi;
@@ -83,114 +83,51 @@ function indeux.removeIndex () {
 }
 
 function indeux.genIndex () {
-    # define function Indeux.interateForDirectory
-    function Indeux.interateForDirectory() {
-        echo "$1/";
+    if source .indeux/index.conf; then {
+        if [ -d .indeux/theme/${INDEUX_THEME} ]; then {
+            # define function Indeux.interateForDirectory
+            function Indeux.interateForDirectory() {
+                echo "$1/";
 
-        for i in $(ls "$1"); do {
-            [[ -d $1"/"$i ]] && Indeux.interateForDirectory "$1""/""$i";
-        }
-        done;
-    }
-
-    # interate for directories
-    Indeux.interateForDirectory . > .indeux/directories.txt;
-
-    # print found directories and the number
-    printf "$(wc -l < .indeux/directories.txt) directories found in total:"\\n;
-    printf \\n;
-    cat .indeux/directories.txt;
-    cp .indeux/directories.txt .indeux/directories-"$(date +%Y%m%dT%H%M%SZ)".txt;
-    printf \\n;
-
-    # create index
-    printf "creating indexes:"\\n;
-    printf \\n;
-
-    if [ "$(wc -l <.indeux/directories.txt)" -gt 0 ]; then {
-        export j=0;
-
-        for ((i = 1; i <= $(wc -l <.indeux/directories.txt); i++)); do {
-            #printf "$(eval sed -n '${i}p' .indeux/directories.txt)index.html"\\n;
-            # write index
-            {
-                echo "<html lang=\"${indeux_htmlLang}\">";
-                echo "    <head>";
-                echo "        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">";
-                echo "<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"${indeux_appleTouchIcon}\">";
-                echo "<link rel=\"icon\" type=\"image/ico\" sizes=\"32x32\" href=\"${indeux_icon}\">";
-                echo "        <title>${indeux_titlePrefix}$(declare currentDirectory=$(sed -n ${i}p .indeux/directories.txt); echo ${currentDirectory:1})</title>";
-                echo "    </head>";
-                echo "    <body style=\"background-color: ${indeux_backgroundColor}\">";
-                #echo "    <link rel=\"stylesheet\" href=\"//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext\">";
-                echo "        <style type=\"text/css\">";
-                echo "        body{";
-                echo "            background: url("${indeux_background}") no-repeat center center fixed;";
-                echo "            -webkit-background-size: cover;";
-                echo "            -o-background-size: cover;  ";
-                echo "            background-size: cover;";
-                echo "        }";
-                echo "        </style>";
-                echo "        <h1><font color="#af7ac5">☆</font> Index of $(declare currentDirectory=$(sed -n ${i}p .indeux/directories.txt); echo ${currentDirectory:1})</h1>";
-                echo "        <HR style=\"FILTER: alpha(opacity=100,finishopacity=0,style=1)\" width="100%" color=#987cb9 SIZE=3>";
-                echo "        <pre>";
-                echo "<a href=\"../\">../</a>";
-            } >> "$(eval sed -n '${i}p' .indeux/directories.txt)/index.html";
-
-            ls -1F "$(pwd)"/"$(eval sed -n '${i}p' .indeux/directories.txt)" >"$(eval sed -n '${i}p' .indeux/directories.txt)/.items.txt";
-
-            sed -i 's/\*//' "$(eval sed -n '${i}p' .indeux/directories.txt)/.items.txt"; # remove asterisks
-
-            if [ $(wc -l <"$(eval sed -n '${i}p' .indeux/directories.txt)/.items.txt") -gt 0 ]; then {
-                for ((j = 1; j <= $(wc -l <"$(eval sed -n '${i}p' .indeux/directories.txt)/.items.txt"); j++)); do {
-                    {
-                        echo -n "<a href=\"";
-                        echo -n $(eval sed -n '${j}p' "$(eval sed -n '${i}p' .indeux/directories.txt)/.items.txt");
-                        echo -n "\">";
-                        echo -n $(eval sed -n '${j}p' "$(eval sed -n '${i}p' .indeux/directories.txt)/.items.txt");
-                        echo "</a>";
-                    } >> "$(eval sed -n '${i}p' .indeux/directories.txt)/index.html";
+                for i in $(ls "$1"); do {
+                    [[ -d $1"/"$i ]] && Indeux.interateForDirectory "$1""/""$i";
                 }
                 done;
             }
+
+            # interate for directories
+            Indeux.interateForDirectory . > .indeux/directories.txt;
+
+            # print found directories and the number
+            printf "$(wc -l < .indeux/directories.txt) directories found in total:"\\n;
+            printf \\n;
+            cat .indeux/directories.txt;
+            cp .indeux/directories.txt .indeux/directories-"$(date +%Y%m%dT%H%M%SZ)".txt;
+            printf \\n;
+
+            # create index
+            printf "creating indexes:"\\n;
+            printf \\n;
+
+            if [ "$(wc -l <.indeux/directories.txt)" -gt 0 ]; then {
+                bash .indeux/theme/${INDEUX_THEME}/theme.sh;
+            }
             fi;
-            
-            rm -f "$(eval sed -n '${i}p' .indeux/directories.txt)/.items.txt";
 
-            {
-                echo "        </pre>";
-                echo "    </body>";
-                echo "</html>";
-            } >> "$(eval sed -n '${i}p' .indeux/directories.txt)/index.html";
-
-            printf "$(eval sed -n '${i}p' .indeux/directories.txt)index.html"\\n;
-
-            # export j=$((j + 1));
-            # echo j=$j;
-
-            # wc -l <.indeux/directories.txt;
-            # if [ $j -ge $(wc -l <.indeux/directories.txt) ]; then {
-            #     mkdir -p ~/.indeux_cache;
-            #     echo INDEUX_GENERATION_STATUS=yes > ~/.indeux_cache/status;
-            # }
-            # fi;
-        } # & \
-        done;
+            printf \\n;
+            printf "succeeded in creating indexes"\\n;
+        }
+        else {
+            printf "$0: cannot find theme \`${INDEUX_THEME}'"\\n;
+            exit 1;
+        }
+        fi;
+    }
+    else {
+        printf "$0: cannot find file \`.indeux/index.conf'"\\n;
+        exit 1;
     }
     fi;
-
-    # while true; do {
-    #     source ~/.indeux_cache/status &> /dev/null;
-    #     echo "${INDEUX_GENERATION_STATUS}";
-    #     if [ -n "${INDEUX_GENERATION_STATUS}" ]; then {
-    #         break;
-    #     }
-    #     fi;
-    # }
-    # done;
-
-    printf \\n;
-    printf "succeeded in creating indexes"\\n;
 }
 
 source /etc/indeux.conf;
