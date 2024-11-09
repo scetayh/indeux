@@ -1,5 +1,5 @@
 PROJECT_NAME = indeux
-RELEASE_VERSION = 3.1.0
+RELEASE_VERSION = 3.2.0
 GIT_REMOTE_ADDRESS = git@github.com:scetayh/indeux
 
 .PHONY: clean install uninstall pull strap commit tag remote debug release revoke
@@ -30,6 +30,7 @@ install:
 	cd /etc && \
 		chmod 444 indeux.conf; \
 		chown root indeux.conf
+	mkdir -p ~/.indeux_cache
 
 uninstall:
 	cd /usr/local/bin && \
@@ -43,7 +44,7 @@ pull:
 	git pull
 
 strap:
-	make pull
+	-make pull
 	sudo make uninstall
 	make clean
 	make
