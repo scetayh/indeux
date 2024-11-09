@@ -175,6 +175,8 @@ while getopts "ghilru" OPT; do {
             indeux.checkInited;
             source /etc/indeux.conf;
             indeux.checkPermission;
+            indeux.removeIndex;
+            echo;
             indeux.genIndex;
             exit 0;
             ;;

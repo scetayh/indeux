@@ -1,5 +1,5 @@
 PROJECT_NAME = indeux
-RELEASE_VERSION = 3.0.1
+RELEASE_VERSION = 3.1.0
 GIT_REMOTE_ADDRESS = git@github.com:scetayh/indeux
 
 .PHONY: clean install uninstall pull strap commit tag remote debug release revoke
