@@ -1,5 +1,5 @@
 PROJECT_NAME = indeux
-RELEASE_VERSION = 4.0.0
+RELEASE_VERSION = 5.0.0
 GIT_REMOTE_ADDRESS = git@github.com:scetayh/indeux
 
 .PHONY: clean install uninstall pull strap commit tag remote debug release revoke
@@ -23,20 +23,21 @@ install:
 	cd doc && \
 		cp -r * /usr/local/share/doc/indeux
 	cd /usr/local/share/doc/indeux && \
-		chmod 666 index.conf; \
-		chown root index.conf
+		chmod 666 local.conf usage.txt && \
+		chown root local.conf usage.txt
 	\
-	cd etc && \
-		cp indeux.conf /etc
+	echo "INDEUX_SYSTEM_VERSION=${RELEASE_VERSION}" > /etc/indeux.system.conf
 	cd /etc && \
-		chmod 444 indeux.conf; \
-		chown root indeux.conf
+		chmod 444 indeux.system.conf; \
+		chown root indeux.system.conf
 
 uninstall:
 	cd /usr/local/bin && \
 		rm -f ${PROJECT_NAME}
+	cd /usr/local/share/doc && \
+		rm -rf ${PROJECT_NAME}
 	cd /etc && \
-		rm -f indeux.conf
+		rm -f indeux.system.conf
 
 pull:
 	git config pull.rebase false

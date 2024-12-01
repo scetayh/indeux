@@ -3,23 +3,16 @@
 ################################################################
 ## compiler: ssc-0.0.1
 ## host: Darwin YupyeSortaco.local 24.1.0 Darwin Kernel Version 24.1.0: Tue Sep 17 07:48:04 PDT 2024; root:xnu-11215.40.59~38/RELEASE_ARM64_T8112 arm64 arm Darwin
-## date: 20241109T232041Z
+## date: 20241201T123941Z
 ################################################################
  
 #!/bin/bash
 
 function indeux.printUsage () {
     printf "indeux v${INDEUX_VERSION}"\\n;
-    printf "Copyright (C) 2024 Tarikko-ScetayhChan"\\n;
+    printf "Copyright (C) 2024 幸草_Tarikko-ScetayhChan"\\n;
     printf \\n;
-    printf "usage: indeux <option>"\\n;
-    printf \\n;
-    printf "options:"\\n;
-    printf "  -i    init this directory for indeux"\\n;
-    printf "  -u    uninit this directory for indeux"\\n;
-    printf "  -g    generate index"\\n;
-    printf "  -r    remove index"\\n;
-    printf "  -h    print this message"\\n;
+    cat /usr/local/share/doc/indeux/usage.txt;
 }
 
 function indeux.checkPermission () {
@@ -91,8 +84,8 @@ function indeux.removeIndex () {
 }
 
 function indeux.genIndex () {
-    if source .indeux/index.conf; then {
-        if [ -d .indeux/theme/${INDEUX_THEME} ]; then {
+    if source .indeux/local.conf; then {
+        if [ -d .indeux/theme/${INDEUX_LOCAL_THEME} ]; then {
             # define function Indeux.interateForDirectory
             function Indeux.interateForDirectory() {
                 echo "$1/";
@@ -113,12 +106,19 @@ function indeux.genIndex () {
             cp .indeux/directories.txt .indeux/directories-"$(date +%Y%m%dT%H%M%SZ)".txt;
             printf \\n;
 
+            # write items in each directory
+            for ((i = 1; i <= $(wc -l <.indeux/directories.txt); i++)); do {
+                ls -1F "$(pwd)"/"$(eval sed -n '${i}p' .indeux/directories.txt)" >"$(eval sed -n '${i}p' .indeux/directories.txt)/.indeux.items.txt";
+                sed -i 's/\*//' "$(eval sed -n '${i}p' .indeux/directories.txt)/.indeux.items.txt"; # remove asterisks
+            }
+            done;
+            
             # create index
             printf "creating indexes:"\\n;
             printf \\n;
 
             if [ "$(wc -l <.indeux/directories.txt)" -gt 0 ]; then {
-                bash .indeux/theme/${INDEUX_THEME}/theme.sh;
+                bash .indeux/theme/${INDEUX_LOCAL_THEME}/main.sh;
             }
             fi;
 
@@ -126,19 +126,21 @@ function indeux.genIndex () {
             printf "succeeded in creating indexes"\\n;
         }
         else {
-            printf "$0: cannot find theme \`${INDEUX_THEME}'"\\n;
+            printf "$0: cannot find theme \`${INDEUX_LOCAL_THEME}'"\\n;
             exit 1;
         }
         fi;
     }
     else {
-        printf "$0: cannot find file \`.indeux/index.conf'"\\n;
+        printf "$0: cannot find file \`.indeux/local.conf'"\\n;
         exit 1;
     }
     fi;
+
+    find -name '.indeux.items.txt' -type f -print -exec rm -rf {} \;
 }
 
-source /etc/indeux.conf;
+source /etc/indeux.system.conf;
 
 while getopts "ghilru" OPT; do {
     case "$OPT" in
