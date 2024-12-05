@@ -32,11 +32,11 @@ install:
 		chown root indeux.system.conf
 
 uninstall:
-	cd /usr/local/bin && \
+	-cd /usr/local/bin && \
 		rm -f ${PROJECT_NAME}
-	cd /usr/local/share/doc && \
+	-cd /usr/local/share/doc && \
 		rm -rf ${PROJECT_NAME}
-	cd /etc && \
+	-cd /etc && \
 		rm -f indeux.system.conf
 
 pull:
