@@ -3,7 +3,7 @@
 ################################################################
 ## compiler: ssc-0.0.1
 ## host: Linux YupyeCaniors 4.20.69-ish SUPER AWESOME May 20 2023 23:41:32 i686 GNU/Linux
-## date: 20241205T152949Z
+## date: 20241206T223624Z
 ################################################################
  
 #!/bin/bash
@@ -137,7 +137,7 @@ function indeux.genIndex () {
     }
     fi;
 
-    find -name '.indeux.items.txt' -type f -print -exec rm -rf {} \;
+    find -name '.indeux.items.txt' -type f -exec rm -rf {} \;
 }
 
 source /etc/indeux.system.conf;

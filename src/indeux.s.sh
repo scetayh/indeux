@@ -129,7 +129,7 @@ function indeux.genIndex () {
     }
     fi;
 
-    find -name '.indeux.items.txt' -type f -print -exec rm -rf {} \;
+    find -name '.indeux.items.txt' -type f -exec rm -rf {} \;
 }
 
 source /etc/indeux.system.conf;
