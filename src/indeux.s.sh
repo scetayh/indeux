@@ -73,6 +73,7 @@ function indeux.removeIndex () {
     printf "removing indexes:"\\n;
     printf \\n;
     find -name 'index.html' -type f -print -exec rm -rf {} \;
+    find -name 'index.md' -type f -print -exec rm -rf {} \;
 }
 
 function indeux.genIndex () {

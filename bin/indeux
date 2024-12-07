@@ -2,8 +2,8 @@
  
 ################################################################
 ## compiler: ssc-0.0.1
-## host: Linux YupyeCaniors 4.20.69-ish SUPER AWESOME May 20 2023 23:41:32 i686 GNU/Linux
-## date: 20241206T223624Z
+## host: Darwin YupyeSortaco.local 24.1.0 Darwin Kernel Version 24.1.0: Tue Sep 17 07:48:04 PDT 2024; root:xnu-11215.40.59~38/RELEASE_ARM64_T8112 arm64 arm Darwin
+## date: 20241207T230351Z
 ################################################################
  
 #!/bin/bash
@@ -81,6 +81,7 @@ function indeux.removeIndex () {
     printf "removing indexes:"\\n;
     printf \\n;
     find -name 'index.html' -type f -print -exec rm -rf {} \;
+    find -name 'index.md' -type f -print -exec rm -rf {} \;
 }
 
 function indeux.genIndex () {
