@@ -76,6 +76,16 @@ function indeux.removeIndex () {
     find -name 'index.md' -type f -print -exec rm -rf {} \;
 }
 
+function indeux.openConfig () {
+    indeux.checkInited;
+    printf "Opening configuration file of this directory..."\\n;
+    if ! vim ./indeux/local.conf; then {
+        printf "$0: cannot find file \`indeux/local.conf'"\\n && \
+            exit 1;
+    }
+    fi;
+}
+
 function indeux.genIndex () {
     if source .indeux/local.conf; then {
         if [ -d .indeux/theme/${INDEUX_LOCAL_THEME} ]; then {
@@ -159,6 +169,10 @@ while getopts "ghilru" OPT; do {
             indeux.checkInited;
             indeux.checkPermission;
             indeux.removeIndex;
+            exit 0;
+            ;;
+        c)
+            indeux.openConfig;
             exit 0;
             ;;
         u)

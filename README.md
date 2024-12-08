@@ -57,6 +57,7 @@ options:
   -u    uninit this directory for indeux
   -g    generate index
   -r    remove index
+  -c    open configuration file of this directory
   -h    print this message
 ```
 

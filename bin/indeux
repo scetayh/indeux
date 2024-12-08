@@ -3,7 +3,7 @@
 ################################################################
 ## compiler: ssc-0.0.1
 ## host: Darwin YupyeSortaco.local 24.1.0 Darwin Kernel Version 24.1.0: Tue Sep 17 07:48:04 PDT 2024; root:xnu-11215.40.59~38/RELEASE_ARM64_T8112 arm64 arm Darwin
-## date: 20241207T230351Z
+## date: 20241208T102023Z
 ################################################################
  
 #!/bin/bash
@@ -82,6 +82,16 @@ function indeux.removeIndex () {
     printf \\n;
     find -name 'index.html' -type f -print -exec rm -rf {} \;
     find -name 'index.md' -type f -print -exec rm -rf {} \;
+}
+
+function indeux.openConfig () {
+    indeux.checkInited;
+    printf "Opening configuration file of this directory..."\\n;
+    if ! vim ./indeux/local.conf; then {
+        printf "$0: cannot find file \`indeux/local.conf'"\\n && \
+            exit 1;
+    }
+    fi;
 }
 
 function indeux.genIndex () {
@@ -167,6 +177,10 @@ while getopts "ghilru" OPT; do {
             indeux.checkInited;
             indeux.checkPermission;
             indeux.removeIndex;
+            exit 0;
+            ;;
+        c)
+            indeux.openConfig;
             exit 0;
             ;;
         u)
