@@ -3,13 +3,13 @@
 ################################################################
 ## compiler: ssc-0.0.1
 ## host: Darwin YupyeSortaco.local 24.1.0 Darwin Kernel Version 24.1.0: Tue Sep 17 07:48:04 PDT 2024; root:xnu-11215.40.59~38/RELEASE_ARM64_T8112 arm64 arm Darwin
-## date: 20241208T102023Z
+## date: 20241214T200706Z
 ################################################################
  
 #!/bin/bash
 
 function indeux.printUsage () {
-    printf "indeux v${INDEUX_VERSION}"\\n;
+    printf "indeux v${INDEUX_SYSTEM_VERSION}"\\n;
     printf "Copyright (C) 2024 幸草_Tarikko-ScetayhChan"\\n;
     printf \\n;
     cat /usr/local/share/doc/indeux/usage.txt;

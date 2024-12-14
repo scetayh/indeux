@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function indeux.printUsage () {
-    printf "indeux v${INDEUX_VERSION}"\\n;
+    printf "indeux v${INDEUX_SYSTEM_VERSION}"\\n;
     printf "Copyright (C) 2024 幸草_Tarikko-ScetayhChan"\\n;
     printf \\n;
     cat /usr/local/share/doc/indeux/usage.txt;
