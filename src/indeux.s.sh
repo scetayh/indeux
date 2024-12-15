@@ -74,6 +74,7 @@ function indeux.removeIndex () {
     printf \\n;
     find -name 'index.html' -type f -print -exec rm -rf {} \;
     find -name 'index.md' -type f -print -exec rm -rf {} \;
+    find -name '.indeux.items.txt' -type f -exec rm -rf {} \;
 }
 
 function indeux.openConfig () {
@@ -86,21 +87,22 @@ function indeux.openConfig () {
     fi;
 }
 
+# function Indeux.interateForDirectory() {
+#     echo "$1/";
+
+#     for i in $(ls "$1"); do {
+#         [[ -d "$1/$i" ]] && eval Indeux.interateForDirectory \'$1/$i\';
+#     }
+#     done;
+# }
+
 function indeux.genIndex () {
     if source .indeux/local.conf; then {
         if [ -d .indeux/theme/${INDEUX_LOCAL_THEME} ]; then {
-            # define function Indeux.interateForDirectory
-            function Indeux.interateForDirectory() {
-                echo "$1/";
-
-                for i in $(ls "$1"); do {
-                    [[ -d $1"/"$i ]] && Indeux.interateForDirectory "$1""/""$i";
-                }
-                done;
-            }
 
             # interate for directories
-            Indeux.interateForDirectory . > .indeux/directories.txt;
+            find . -type d -not -path "*/.*" > .indeux/directories.txt;
+            sed -i "s/$/&\//g" .indeux/directories.txt;
 
             # print found directories and the number
             printf "$(wc -l < .indeux/directories.txt) directories found in total:"\\n;
@@ -139,8 +141,6 @@ function indeux.genIndex () {
         exit 1;
     }
     fi;
-
-    find -name '.indeux.items.txt' -type f -exec rm -rf {} \;
 }
 
 source /etc/indeux.system.conf;
