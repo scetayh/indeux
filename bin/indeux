@@ -2,8 +2,8 @@
  
 ################################################################
 ## compiler: ssc-0.0.1
-## host: Darwin YupyeSortaco.local 24.1.0 Darwin Kernel Version 24.1.0: Tue Sep 17 07:48:04 PDT 2024; root:xnu-11215.40.59~38/RELEASE_ARM64_T8112 arm64 arm Darwin
-## date: 20241215T095055Z
+## host: Darwin YupyeSortaco.local 24.3.0 Darwin Kernel Version 24.3.0: Mon Dec  9 19:48:58 PST 2024; root:xnu-11215.80.25.501.2~1/RELEASE_ARM64_T8112 arm64 arm Darwin
+## date: 20241231T212335Z
 ################################################################
  
 #!/bin/bash
